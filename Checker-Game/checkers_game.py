@@ -51,7 +51,7 @@ class CheckerGame:
             return False
         if  self.board.get_place(piece).occupant.player == PiecePlayer.SECOND_PLAYER:
             direction = -1
-        if self.board.get_index(destination) - self.board.get_index(piece) == direction and abs(int(destination[1]) - int(piece[1]))2 == 1:
+        if self.board.get_index(destination) - self.board.get_index(piece) == direction and abs(int(destination[1]) - int(piece[1])) == 1:
             self.change_places(piece, destination)
             return True
         elif self.board.get_index(destination) - self.board.get_index(piece) == direction * 2 and abs(int(destination[1]) - int(piece[1])) == 2:
