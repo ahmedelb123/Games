@@ -27,9 +27,9 @@ class CheckerGame:
 
     def give_interm_piece(self, piece, destination):
         piece_place = self.board.get_place(piece)
-        if piece_place.occupant.player == PiecePlayer.FIRST_PLAYER:
-            return self.board[self.board.get_index(piece) + 1][int(piece[1]) + ((int(destination[1]) - int(piece[1])) / 2 ) - 1]
-        return self.board[self.board.get_index(piece) - 1][int(piece[1]) + ((int(destination[1]) - int(piece[1])) / 2 ) - 1]
+        if piece_place.occupant.player == PiecePlayer.FIRST_PLAYER.value:
+            return self.board.places[self.board.get_index(piece) + 1][int(int(piece[1]) + ((int(destination[1]) - int(piece[1])) / 2 ) - 1)]
+        return self.board.places[self.board.get_index(piece) - 1][int(int(piece[1]) + ((int(destination[1]) - int(piece[1])) / 2 ) - 1)]
 
 
 
@@ -49,15 +49,16 @@ class CheckerGame:
         direction = 1
         if self.board.get_place(destination).occupant != None:
             return False
-        if  self.board.get_place(piece).occupant.player == PiecePlayer.SECOND_PLAYER:
+        if  self.board.get_place(piece).occupant.player == PiecePlayer.SECOND_PLAYER.value:
             direction = -1
         if self.board.get_index(destination) - self.board.get_index(piece) == direction and abs(int(destination[1]) - int(piece[1])) == 1:
             self.change_places(piece, destination)
             return True
         elif self.board.get_index(destination) - self.board.get_index(piece) == direction * 2 and abs(int(destination[1]) - int(piece[1])) == 2:
-            if self.give_interm_piece(piece, destination).occuapnt.player != self.board.get_place(piece).occupant.player:
+            if self.give_interm_piece(piece, destination).occupant.player != self.board.get_place(piece).occupant.player:
                 self.give_interm_piece(piece, destination).remove_occupant()
-                self.change_places()
+                self.change_places(piece, destination)
+                return True
         return False
 
 
@@ -111,6 +112,7 @@ class CheckerGame:
                                 self.board.places[row][column].remove_occupant()
                                 self.change_places(piece, destination)
                                 return True
+                    return False
         return False
 
 
